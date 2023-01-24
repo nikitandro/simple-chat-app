@@ -1,0 +1,9 @@
+{
+    "development": {
+        "username": "nikitandro",
+        "password": "root",
+        "database": "simple-chat-app-database",
+        "host": "localhost",
+        "dialect": "postgres"
+    }
+}

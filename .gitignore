@@ -1,0 +1,6 @@
+backend/simple-chat-app-backend/node_modules
+frontend/simple-chat-app-frontend/node_modules
+
+backend/simple-chat-app-backend/.development.env
+backend/simple-chat-app-backend/.env
+backend/simple-chat-app-backend/.production.env

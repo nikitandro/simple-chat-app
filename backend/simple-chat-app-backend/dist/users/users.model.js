@@ -25,11 +25,11 @@ __decorate([
         unique: true,
         primaryKey: true,
     }),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], User.prototype, "id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: 'Никита', description: 'Имя' }),
-    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING, allowNull: false }),
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING, allowNull: false, unique: true }),
     __metadata("design:type", String)
 ], User.prototype, "name", void 0);
 __decorate([

@@ -18,10 +18,10 @@ export class User extends Model<User, UserCreationAttributes> {
         unique: true,
         primaryKey: true,
     })
-    id: number;
+    id: string;
 
     @ApiProperty({ example: 'Никита', description: 'Имя' })
-    @Column({ type: DataType.STRING, allowNull: false })
+    @Column({ type: DataType.STRING, allowNull: false, unique: true })
     name: string;
 
     @ApiProperty({ example: 'email@email.com', description: 'Почтовый адрес' })

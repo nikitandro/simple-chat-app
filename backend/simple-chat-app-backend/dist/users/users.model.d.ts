@@ -4,7 +4,7 @@ interface UserCreationAttributes {
     password: string;
 }
 export declare class User extends Model<User, UserCreationAttributes> {
-    id: number;
+    id: string;
     name: string;
     email: string;
     password: string;

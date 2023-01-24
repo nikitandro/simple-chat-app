@@ -28,6 +28,13 @@ let UsersService = class UsersService {
         const users = await this.userRepository.findAll();
         return users;
     }
+    async getUserByEmail(email) {
+        const user = await this.userRepository.findOne({
+            where: { email },
+            include: { all: true },
+        });
+        return user;
+    }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),

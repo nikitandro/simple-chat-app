@@ -12,6 +12,7 @@ const config_1 = require("@nestjs/config");
 const sequelize_1 = require("@nestjs/sequelize");
 const users_model_1 = require("./users/users.model");
 const users_module_1 = require("./users/users.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -34,6 +35,7 @@ AppModule = __decorate([
                 synchronize: true,
             }),
             users_module_1.UsersModule,
+            auth_module_1.AuthModule,
         ],
     })
 ], AppModule);

@@ -11,18 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
 class CreateUserDto {
 }
 __decorate([
     (0, swagger_1.ApiProperty)({ example: 'Никита', description: 'Имя' }),
+    (0, class_validator_1.IsDefined)({ message: 'Должно быть определено' }),
+    (0, class_validator_1.IsString)({ message: 'Должно быть строкой' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "name", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: 'email@email.com' }),
+    (0, class_validator_1.IsDefined)({ message: 'Должно быть определено' }),
+    (0, class_validator_1.IsString)({ message: 'Должно быть строкой' }),
+    (0, class_validator_1.IsEmail)({}, { message: 'Некорректный email' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "email", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: '1234', description: 'Хэшированный пароль' }),
+    (0, class_validator_1.IsDefined)({ message: 'Должно быть определено' }),
+    (0, class_validator_1.IsString)({ message: 'Должно быть строкой' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);
 exports.CreateUserDto = CreateUserDto;

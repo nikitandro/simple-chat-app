@@ -1,0 +1,15 @@
+$button_color: #665ed4;
+$button_text_color: white;
+
+.button-container {
+  button {
+    font-weight: 700;
+    font-size: 18px;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: $button_text_color;
+    background-color: $button_color;
+    text-transform: uppercase;
+  }
+}

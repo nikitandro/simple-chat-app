@@ -1,0 +1,17 @@
+@import '../../../styles/vars';
+
+$input_background_color: #43444d;
+$input_text_color: white;
+
+.textField-container {
+  input {
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: $ui_font_size_medium;
+    color: $input_text_color;
+    background-color: $input_background_color;
+  }
+}

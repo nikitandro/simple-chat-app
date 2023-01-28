@@ -4,8 +4,9 @@ import { Button } from '../../components/UI/Button/Button';
 import { TextField } from '../../components/UI/TextField/TextField';
 import './AuthPage.scss';
 import { LinkUI } from '../../components/UI/LinkUI/LinkUI';
-import { CSSProperties, FormEvent, useEffect, useState } from 'react';
+import { CSSProperties, useState } from 'react';
 import { ChangeEvent } from 'react';
+import User from '../../mobX/User';
 
 export const AuthPage = observer(() => {
   const [activeLink, setActiveLink] = useState<'login' | 'reg'>('reg');
@@ -35,7 +36,11 @@ const LoginControls = () => {
   const inputsStyles: CSSProperties = { width: '100%' };
 
   const [email, setEmail] = useState<string>('');
-  const [passord, setPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+
+  const user = User;
 
   const setEmailFieldState = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -45,6 +50,10 @@ const LoginControls = () => {
   const setPasswordFieldState = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     setPassword(event.target.value);
+  };
+
+  const sendLoginRequest = async () => {
+    console.log(await user.login({ email, password }).json());
   };
 
   return (
@@ -59,7 +68,7 @@ const LoginControls = () => {
         style={inputsStyles}
         onChange={setPasswordFieldState}
       />
-      <Button>Log In</Button>
+      <Button onClick={sendLoginRequest}>Log In</Button>
     </>
   );
 };
@@ -69,7 +78,9 @@ const RegisterControls = () => {
 
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [passord, setPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  const user = User;
 
   const setNameFieldState = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -84,6 +95,10 @@ const RegisterControls = () => {
   const setPasswordFieldState = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     setPassword(event.target.value);
+  };
+
+  const sendRegisterRequest = async () => {
+    console.log(await user.register({ name, email, password }).json());
   };
 
   return (
@@ -103,7 +118,7 @@ const RegisterControls = () => {
         style={inputsStyles}
         onChange={setPasswordFieldState}
       />
-      <Button>Register</Button>
+      <Button onClick={sendRegisterRequest}>Register</Button>
     </>
   );
 };

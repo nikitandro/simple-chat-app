@@ -14,11 +14,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
+const jwt_1 = require("@nestjs/jwt");
 const sequelize_1 = require("@nestjs/sequelize");
 const users_model_1 = require("./users.model");
 let UsersService = class UsersService {
-    constructor(userRepository) {
+    constructor(userRepository, jwtServie) {
         this.userRepository = userRepository;
+        this.jwtServie = jwtServie;
     }
     async createUser(dto) {
         const user = await this.userRepository.create(dto);
@@ -35,11 +37,23 @@ let UsersService = class UsersService {
         });
         return user;
     }
+    async getUserById(id) {
+        const user = this.userRepository.findOne({
+            where: { id },
+            attributes: { exclude: ['password', 'refreshToken'] },
+        });
+        return user;
+    }
+    async getUserByBearerToken(bearerToken) {
+        const token = bearerToken.split(' ')[1];
+        const id = this.jwtServie.decode(token).id;
+        return this.getUserById(id);
+    }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, sequelize_1.InjectModel)(users_model_1.User)),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [Object, jwt_1.JwtService])
 ], UsersService);
 exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

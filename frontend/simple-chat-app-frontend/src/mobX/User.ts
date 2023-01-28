@@ -1,4 +1,9 @@
 import { makeAutoObservable } from 'mobx';
+import {
+  UserAPI,
+  UserLoginRequestBody,
+  UserRegisterRequestBody,
+} from '../api/User';
 
 export interface IUser {
   name: string | null;
@@ -6,20 +11,37 @@ export interface IUser {
 }
 
 class User implements IUser {
-  private _name: string | null;
-  private _id: string | null;
+  name: string | null;
+  id: string | null;
+  isAuth: boolean;
 
   constructor() {
     makeAutoObservable(this);
-    this._name = null;
-    this._id = null;
+    this.name = null;
+    this.id = null;
+    this.isAuth = false;
   }
 
-  get name(): string | null {
-    return this._name;
+  getTokenFromLocalStorage() {
+    return localStorage.getItem('token');
   }
 
-  get id(): string | null {
-    return this._id;
+  setTokenToLocalStorage(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.isAuth = false;
+  }
+
+  register(requestBody: UserRegisterRequestBody) {
+    return UserAPI.register(requestBody);
+  }
+
+  login(requestBody: UserLoginRequestBody) {
+    return UserAPI.login(requestBody);
   }
 }
+
+export default new User();

@@ -15,6 +15,8 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/uuid": "^9.0.0",
+    "dotenv": "^16.0.3",
+    "ky": "^0.33.2",
     "mobx": "^6.7.0",
     "mobx-react-lite": "^3.4.0",
     "node-sass": "^7.0.3",

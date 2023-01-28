@@ -26,8 +26,9 @@ let UsersController = class UsersController {
     create(userDto) {
         return this.usersService.createUser(userDto);
     }
-    getAll() {
-        return this.usersService.getAllUsers();
+    getUser(request) {
+        const token = request.headers.authorization;
+        return this.usersService.getUserByBearerToken(token);
     }
 };
 __decorate([
@@ -40,17 +41,24 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "create", null);
 __decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Запрос всех пользователей' }),
-    (0, swagger_1.ApiResponse)({ status: 200, type: [users_model_1.User] }),
+    (0, swagger_1.ApiOperation)({ summary: 'Запрос пользователя по токену' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        type: (0, swagger_1.OmitType)(users_model_1.User, [
+            'password',
+            'refreshToken',
+        ]),
+    }),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], UsersController.prototype, "getAll", null);
+], UsersController.prototype, "getUser", null);
 UsersController = __decorate([
     (0, swagger_1.ApiTags)('Пользователи'),
-    (0, common_1.Controller)('users'),
+    (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
 exports.UsersController = UsersController;

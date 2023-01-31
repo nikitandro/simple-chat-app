@@ -19,6 +19,10 @@ const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const users_model_1 = require("./users.model");
 const users_service_1 = require("./users.service");
+const GetUserResponse = (0, swagger_1.OmitType)(users_model_1.User, [
+    'password',
+    'refreshToken',
+]);
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -44,10 +48,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Запрос пользователя по токену' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
-        type: (0, swagger_1.OmitType)(users_model_1.User, [
-            'password',
-            'refreshToken',
-        ]),
+        type: GetUserResponse,
     }),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)(),

@@ -1,3 +1,17 @@
+$body_background_color: #2d2e34;
+
 $ui_font_size_medium: 18px;
 $ui_font_size_small: 14px;
 $ui_font_size_large: 22px;
+
+$chat_wrapper_background_color: #24252b;
+$chat_message_outgoing_background: linear-gradient(
+  106.67deg,
+  #6c46d6 0%,
+  #9725dd 48.61%,
+  #a846d6 77.14%
+);
+$chat_message_incoming_background_color: #2f3035;
+
+$input_background_color: #43444d;
+$input_text_color: white;

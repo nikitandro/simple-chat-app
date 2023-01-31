@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import { Message } from 'src/messages/messages.model';
 
 interface UserCreationAttributes {
     email: string;
@@ -43,4 +44,7 @@ export class User extends Model<User, UserCreationAttributes> {
     @ApiProperty({ description: 'Refresh Token (JWT)' })
     @Column({ type: DataType.STRING, allowNull: true })
     refreshToken: string;
+
+    @HasMany(() => Message)
+    messages: Message[];
 }

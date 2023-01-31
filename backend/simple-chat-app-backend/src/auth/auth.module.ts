@@ -12,7 +12,7 @@ import { AuthService } from './auth.service';
         JwtModule.register({
             secret: process.env.SECRET || 'secret',
             signOptions: {
-                expiresIn: '5m',
+                expiresIn: '1h',
             },
         }),
     ],

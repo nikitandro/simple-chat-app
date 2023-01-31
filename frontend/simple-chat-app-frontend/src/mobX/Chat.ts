@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import RootStore from './RootStore';
 
-export interface IMessage {
+export interface Message {
   text: string;
   senderName: string;
   senderId: string;
@@ -9,7 +9,7 @@ export interface IMessage {
 
 class Chat {
   private rootStore;
-  public messages: IMessage[];
+  public messages: Message[];
   constructor() {
     makeAutoObservable(this);
     this.rootStore = RootStore;

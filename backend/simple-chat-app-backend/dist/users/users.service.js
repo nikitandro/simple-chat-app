@@ -45,9 +45,18 @@ let UsersService = class UsersService {
         return user;
     }
     async getUserByBearerToken(bearerToken) {
-        const token = bearerToken.split(' ')[1];
-        const id = this.jwtServie.decode(token).id;
+        const id = this.getUserIdFromBearerToken(bearerToken);
         return this.getUserById(id);
+    }
+    getUserIdFromBearerToken(bearerToken) {
+        const token = this.getTokenFromBearerToken(bearerToken);
+        return this.getUserIdFromToken(token);
+    }
+    getUserIdFromToken(token) {
+        return this.jwtServie.decode(token).id;
+    }
+    getTokenFromBearerToken(bearerToken) {
+        return bearerToken.split(' ')[1];
     }
 };
 UsersService = __decorate([

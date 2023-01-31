@@ -7,6 +7,7 @@ import { LinkUI } from '../../components/UI/LinkUI/LinkUI';
 import { CSSProperties, useState } from 'react';
 import { ChangeEvent } from 'react';
 import User from '../../mobX/User';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthPage = observer(() => {
   const [activeLink, setActiveLink] = useState<'login' | 'reg'>('reg');
@@ -38,7 +39,7 @@ const LoginControls = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const user = User;
 
@@ -53,7 +54,11 @@ const LoginControls = () => {
   };
 
   const sendLoginRequest = async () => {
-    console.log(await user.login({ email, password }).json());
+    const response = await user.login({ email, password });
+
+    if (response?.ok) {
+      navigate('/');
+    }
   };
 
   return (
@@ -80,6 +85,8 @@ const RegisterControls = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const navigate = useNavigate();
+
   const user = User;
 
   const setNameFieldState = (event: ChangeEvent<HTMLInputElement>) => {
@@ -98,7 +105,11 @@ const RegisterControls = () => {
   };
 
   const sendRegisterRequest = async () => {
-    console.log(await user.register({ name, email, password }).json());
+    const response = await user.register({ name, email, password });
+
+    if (response?.ok) {
+      navigate('/');
+    }
   };
 
   return (

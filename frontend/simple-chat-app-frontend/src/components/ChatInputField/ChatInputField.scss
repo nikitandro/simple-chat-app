@@ -1,0 +1,31 @@
+@import '../../styles/vars';
+.chat-input-field-wrapper {
+  height: min-content;
+  .chat-input-field {
+    display: block;
+    resize: none;
+    background-color: $input_background_color;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    width: 400px;
+    height: 100px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #7e7d9d;
+    }
+  }
+}

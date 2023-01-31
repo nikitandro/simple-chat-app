@@ -1,7 +1,6 @@
 import { Injectable, UsePipes } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/sequelize';
-import { OmitType } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './users.model';
 
@@ -39,8 +38,17 @@ export class UsersService {
     }
 
     async getUserByBearerToken(bearerToken: string) {
-        const token = bearerToken.split(' ')[1];
-        const id = (
+        const id = this.getUserIdFromBearerToken(bearerToken);
+        return this.getUserById(id);
+    }
+
+    getUserIdFromBearerToken(bearerToken: string) {
+        const token = this.getTokenFromBearerToken(bearerToken);
+        return this.getUserIdFromToken(token);
+    }
+
+    getUserIdFromToken(token: string) {
+        return (
             this.jwtServie.decode(token) as {
                 email: string;
                 id: string;
@@ -48,6 +56,9 @@ export class UsersService {
                 exp: number;
             }
         ).id;
-        return this.getUserById(id);
+    }
+
+    getTokenFromBearerToken(bearerToken: string) {
+        return bearerToken.split(' ')[1];
     }
 }

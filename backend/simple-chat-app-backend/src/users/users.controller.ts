@@ -1,20 +1,17 @@
-import {
-    Controller,
-    Post,
-    Body,
-    Get,
-    UseGuards,
-    UsePipes,
-    Req,
-} from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Req } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, OmitType } from '@nestjs/swagger';
 import { Request } from 'express';
-import { request } from 'http';
+
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { ValidationPipe } from 'src/pipes/validation.pipe';
+
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './users.model';
 import { UsersService } from './users.service';
+
+const GetUserResponse = OmitType<User, 'password' | 'refreshToken'>(User, [
+    'password',
+    'refreshToken',
+]);
 
 @ApiTags('Пользователи')
 @Controller('user')
@@ -39,10 +36,7 @@ export class UsersController {
     @ApiOperation({ summary: 'Запрос пользователя по токену' })
     @ApiResponse({
         status: 200,
-        type: OmitType<User, 'password' | 'refreshToken'>(User, [
-            'password',
-            'refreshToken',
-        ]),
+        type: GetUserResponse,
     })
     @UseGuards(JwtAuthGuard)
     @Get()

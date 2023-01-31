@@ -1,4 +1,5 @@
 import { Model } from 'sequelize-typescript';
+import { Message } from 'src/messages/messages.model';
 interface UserCreationAttributes {
     email: string;
     password: string;
@@ -11,5 +12,6 @@ export declare class User extends Model<User, UserCreationAttributes> {
     banned: boolean;
     banReason: string;
     refreshToken: string;
+    messages: Message[];
 }
 export {};

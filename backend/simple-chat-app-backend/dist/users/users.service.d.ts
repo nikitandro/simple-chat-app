@@ -10,6 +10,7 @@ export declare class UsersService {
     getUserByEmail(email: string): Promise<User>;
     getUserById(id: string): Promise<User>;
     getUserByBearerToken(bearerToken: string): Promise<User>;
+    getUserNameByUserId(id: string): Promise<string>;
     getUserIdFromBearerToken(bearerToken: string): string;
     getUserIdFromToken(token: string): string;
     getTokenFromBearerToken(bearerToken: string): string;

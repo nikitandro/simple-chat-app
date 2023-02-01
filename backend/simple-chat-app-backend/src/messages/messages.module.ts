@@ -4,12 +4,13 @@ import { AuthModule } from 'src/auth/auth.module';
 import { User } from 'src/users/users.model';
 import { UsersModule } from 'src/users/users.module';
 import { MessagesController } from './messages.controller';
+import { MessageGateway } from './messages.gateway';
 import { Message } from './messages.model';
 import { MessagesService } from './messages.service';
 
 @Module({
     controllers: [MessagesController],
-    providers: [MessagesService],
+    providers: [MessagesService, MessageGateway],
     imports: [
         SequelizeModule.forFeature([User, Message]),
         AuthModule,

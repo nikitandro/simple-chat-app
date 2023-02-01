@@ -42,6 +42,11 @@ export class UsersService {
         return this.getUserById(id);
     }
 
+    async getUserNameByUserId(id: string) {
+        const user = await this.userRepository.findOne({ where: { id } });
+        return user.name;
+    }
+
     getUserIdFromBearerToken(bearerToken: string) {
         const token = this.getTokenFromBearerToken(bearerToken);
         return this.getUserIdFromToken(token);

@@ -9,11 +9,11 @@ export interface ChatMessageProps {
 }
 
 export const ChatMessage = observer((props: ChatMessageProps) => {
-  const type = props.message.senderId === User.id ? 'outgoing' : 'incoming';
+  const type = props.message.user.id === User.id ? 'outgoing' : 'incoming';
   return (
     <Container className={`chat-message-wrapper ${type}`}>
       <Container className={`chat-message ${type}`}>
-        <span className='name'>{props.message.senderName}</span>
+        <span className='name'>{props.message.user.name}</span>
         <span className='text'>{props.message.text}</span>
       </Container>
     </Container>

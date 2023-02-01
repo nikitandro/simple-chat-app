@@ -48,6 +48,10 @@ let UsersService = class UsersService {
         const id = this.getUserIdFromBearerToken(bearerToken);
         return this.getUserById(id);
     }
+    async getUserNameByUserId(id) {
+        const user = await this.userRepository.findOne({ where: { id } });
+        return user.name;
+    }
     getUserIdFromBearerToken(bearerToken) {
         const token = this.getTokenFromBearerToken(bearerToken);
         return this.getUserIdFromToken(token);

@@ -13,6 +13,7 @@ const auth_module_1 = require("../auth/auth.module");
 const users_model_1 = require("../users/users.model");
 const users_module_1 = require("../users/users.module");
 const messages_controller_1 = require("./messages.controller");
+const messages_gateway_1 = require("./messages.gateway");
 const messages_model_1 = require("./messages.model");
 const messages_service_1 = require("./messages.service");
 let MessagesModule = class MessagesModule {
@@ -20,7 +21,7 @@ let MessagesModule = class MessagesModule {
 MessagesModule = __decorate([
     (0, common_1.Module)({
         controllers: [messages_controller_1.MessagesController],
-        providers: [messages_service_1.MessagesService],
+        providers: [messages_service_1.MessagesService, messages_gateway_1.MessageGateway],
         imports: [
             sequelize_1.SequelizeModule.forFeature([users_model_1.User, messages_model_1.Message]),
             auth_module_1.AuthModule,

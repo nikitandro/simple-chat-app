@@ -35,7 +35,7 @@ class User implements IUser {
     this.createdAt = null;
     this.updatedAt = null;
     if (localStorage.getItem('token')) {
-      this.getUser();
+      this.fetchUser();
     }
   }
 
@@ -71,6 +71,8 @@ class User implements IUser {
       const responseJson = (await response.json()) as UserAuthResponse;
       localStorage.setItem('token', responseJson.token);
     }
+
+    await this.fetchUser();
     return response;
   }
 
@@ -86,11 +88,11 @@ class User implements IUser {
     const responseJson = (await response.json()) as UserAuthResponse;
     localStorage.setItem('token', responseJson.token);
 
-    await this.getUser();
+    await this.fetchUser();
     return response;
   }
 
-  async getUser() {
+  async fetchUser() {
     const response = await UserAPI.getUser().catch((error) => {
       console.log(error);
     });

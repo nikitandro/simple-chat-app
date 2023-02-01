@@ -15,15 +15,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessagesService = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
+const users_model_1 = require("../users/users.model");
 const messages_model_1 = require("./messages.model");
 let MessagesService = class MessagesService {
     constructor(messageRepository) {
         this.messageRepository = messageRepository;
     }
-    async create(dto, userId) {
+    async createMessage(dto, userId) {
         const createObject = { userId, text: dto.text };
         const message = await this.messageRepository.create(createObject);
         return message;
+    }
+    async getMessages() {
+        return this.messageRepository.findAll({
+            attributes: { exclude: ['userId'] },
+            include: {
+                model: users_model_1.User,
+                attributes: {
+                    exclude: [
+                        'password',
+                        'banned',
+                        'banReason',
+                        'createdAt',
+                        'updatedAt',
+                        'refreshToken',
+                    ],
+                },
+            },
+        });
     }
 };
 MessagesService = __decorate([

@@ -16,7 +16,24 @@ export class MessagesService {
         const createObject = { userId, text: dto.text };
 
         const message = await this.messageRepository.create(createObject);
-        return message;
+
+        return this.messageRepository.findOne({
+            where: { id: message.id },
+            attributes: { exclude: ['userId'] },
+            include: {
+                model: User,
+                attributes: {
+                    exclude: [
+                        'password',
+                        'banned',
+                        'banReason',
+                        'createdAt',
+                        'updatedAt',
+                        'refreshToken',
+                    ],
+                },
+            },
+        });
     }
 
     async getMessages() {

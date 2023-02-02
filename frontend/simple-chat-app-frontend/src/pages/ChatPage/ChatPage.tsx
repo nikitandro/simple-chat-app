@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { API_URL } from '../../api/host';
 import { ChatInputField } from '../../components/ChatInputField/ChatInputField';
@@ -12,16 +12,17 @@ import './ChatPage.scss';
 
 export const ChatPage = observer(() => {
   const [chatInputState, setChatInputState] = useState<string>('');
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>(() => []);
   const chatInputRef = useRef<HTMLTextAreaElement>(null);
 
   const [socket, setSocket] = useState<Socket>();
 
-  // const sendMessage = () => {
-  //   if (chatInputState) {
-  //     console.log(chatInputState);
-  //   }
-  // };
+  const eraseChatInput = () => {
+    setChatInputState('');
+    if (chatInputRef.current) {
+      chatInputRef.current.value = '';
+    }
+  };
 
   useEffect(() => {
     const newSocket = io('http://localhost:2048');
@@ -36,9 +37,14 @@ export const ChatPage = observer(() => {
 
     socket.emit('message:get');
 
-    socket.on('messages', (messages) => {
-      console.log(messages);
-      setMessages(messages);
+    socket.on('messages', (messagesIncome) => {
+      console.log(messagesIncome);
+      setMessages(messagesIncome);
+    });
+
+    socket.on('message', (messageIncome) => {
+      console.log(messageIncome);
+      setMessages((prevMessages) => prevMessages.concat([messageIncome]));
     });
     return () => {
       socket.disconnect();
@@ -46,12 +52,23 @@ export const ChatPage = observer(() => {
   }, [socket]);
 
   const sendMessage = () => {
-    console.log('clicked');
-    console.log(chatInputState);
     if (!chatInputState && !socket) return;
+    setChatInputState(chatInputState.trim());
     socket?.emit('message:send', { text: chatInputState, userId: User.id });
-    setChatInputState('');
-    if (chatInputRef.current) chatInputRef.current.value = '';
+    eraseChatInput();
+  };
+
+  const onChatInputEnterKeyDown = (
+    event: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (
+      event.key === 'Enter' &&
+      !(event.shiftKey || event.ctrlKey || event.altKey || event.metaKey)
+    ) {
+      event.preventDefault();
+      sendMessage();
+      eraseChatInput();
+    }
   };
 
   return (
@@ -64,6 +81,7 @@ export const ChatPage = observer(() => {
           <Container className='chat-controls-wrapper'>
             <ChatInputField
               ref={chatInputRef}
+              onKeyDown={onChatInputEnterKeyDown}
               onChange={(event) => setChatInputState(event.target.value)}
             />
             <ChatSendMessageButton onClick={sendMessage} />

@@ -33,6 +33,6 @@ export class MessageGateway {
             dto.userId,
         );
 
-        this.getMessages();
+        this.server.emit('message', message);
     }
 }

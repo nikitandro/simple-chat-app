@@ -26,7 +26,7 @@ let MessageGateway = class MessageGateway {
     }
     async addMessage(dto) {
         const message = await this.messageService.createMessage(dto, dto.userId);
-        this.getMessages();
+        this.server.emit('message', message);
     }
 };
 __decorate([

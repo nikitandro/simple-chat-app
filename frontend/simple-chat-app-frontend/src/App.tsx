@@ -7,6 +7,9 @@ import User from './mobX/User';
 import { Router } from './routing/Router';
 
 const App = observer(() => {
+  useEffect(() => {
+    User.fetchUser();
+  }, []);
   return (
     <div className='App'>
       <Router />

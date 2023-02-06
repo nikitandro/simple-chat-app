@@ -29,6 +29,10 @@
         font-weight: 600;
         margin-bottom: 3px;
       }
+
+      &.text {
+        white-space: pre;
+      }
     }
 
     &.incoming {

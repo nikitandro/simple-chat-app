@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { API_URL } from '../../api/host';
+import { WS_URL } from '../../api/host';
 import { ChatInputField } from '../../components/ChatInputField/ChatInputField';
 import { ChatSendMessageButton } from '../../components/ChatSendMessageButton/ChatSendMessageButton';
 import { ChatWindow } from '../../components/ChatWindow/ChatWindow';
@@ -25,7 +25,15 @@ export const ChatPage = observer(() => {
   };
 
   useEffect(() => {
-    const newSocket = io('http://localhost:2048');
+    const newSocket = io(WS_URL, {
+      transportOptions: {
+        polling: {
+          extraHeaders: {
+            authorization: `Bearer ${User.getTokenFromLocalStorage()}`,
+          },
+        },
+      },
+    });
     setSocket(newSocket);
     return () => {
       newSocket.close();
@@ -52,9 +60,12 @@ export const ChatPage = observer(() => {
   }, [socket]);
 
   const sendMessage = () => {
-    if (!chatInputState && !socket) return;
+    if (!chatInputState.trim()) return;
     setChatInputState(chatInputState.trim());
-    socket?.emit('message:send', { text: chatInputState, userId: User.id });
+    socket?.emit('message:send', {
+      text: chatInputState.trim(),
+      userId: User.id,
+    });
     eraseChatInput();
   };
 
@@ -67,7 +78,6 @@ export const ChatPage = observer(() => {
     ) {
       event.preventDefault();
       sendMessage();
-      eraseChatInput();
     }
   };
 

@@ -13,7 +13,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageGateway = void 0;
+const common_1 = require("@nestjs/common");
 const websockets_1 = require("@nestjs/websockets");
+const jwt_ws_auth_guard_1 = require("../auth/jwt-ws-auth.guard");
 const create_message_dto_1 = require("./dto/create-message.dto");
 const messages_service_1 = require("./messages.service");
 let MessageGateway = class MessageGateway {
@@ -34,12 +36,14 @@ __decorate([
     __metadata("design:type", Object)
 ], MessageGateway.prototype, "server", void 0);
 __decorate([
+    (0, common_1.UseGuards)(jwt_ws_auth_guard_1.WsGuard),
     (0, websockets_1.SubscribeMessage)('message:get'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], MessageGateway.prototype, "getMessages", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_ws_auth_guard_1.WsGuard),
     (0, websockets_1.SubscribeMessage)('message:send'),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),

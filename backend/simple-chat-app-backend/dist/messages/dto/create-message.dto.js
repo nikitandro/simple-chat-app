@@ -18,7 +18,7 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: 'Hello!', description: 'Текст сообщения' }),
     (0, class_validator_1.IsDefined)({ message: 'Должно быть определено' }),
     (0, class_validator_1.IsString)({ message: 'Должно быть строкой' }),
-    (0, class_validator_1.Length)(1, 10000, { message: 'Длина строки должна быть больше нуля' }),
+    (0, class_validator_1.MinLength)(1, { message: 'Длина строки должна быть больше нуля' }),
     __metadata("design:type", String)
 ], CreateMessageDto.prototype, "text", void 0);
 __decorate([

@@ -6,6 +6,7 @@ import {
     WebSocketServer,
 } from '@nestjs/websockets';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { WsGuard } from 'src/auth/jwt-ws-auth.guard';
 import { CreateMessageDto } from './dto/create-message.dto';
 
 import { MessagesService } from './messages.service';
@@ -17,7 +18,7 @@ export class MessageGateway {
 
     constructor(private readonly messageService: MessagesService) {}
 
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(WsGuard)
     @SubscribeMessage('message:get')
     async getMessages() {
         const messages = await this.messageService.getMessages();
@@ -25,7 +26,7 @@ export class MessageGateway {
         this.server.emit('messages', messages);
     }
 
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(WsGuard)
     @SubscribeMessage('message:send')
     async addMessage(@MessageBody() dto: CreateMessageDto) {
         const message = await this.messageService.createMessage(

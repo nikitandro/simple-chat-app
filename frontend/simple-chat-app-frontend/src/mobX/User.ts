@@ -93,13 +93,23 @@ class User implements IUser {
   }
 
   async fetchUser() {
+    let timeoutId: NodeJS.Timeout | undefined;
     const response = await UserAPI.getUser().catch((error) => {
       console.log(error);
     });
 
     if (!response?.ok) {
       this.logout();
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
       return;
+    }
+
+    if (!timeoutId) {
+      timeoutId = setTimeout(() => {
+        this.fetchUser();
+      }, 300000);
     }
     const responseJson = (await response.json()) as GetUserResponse;
     this.setUser(responseJson);
